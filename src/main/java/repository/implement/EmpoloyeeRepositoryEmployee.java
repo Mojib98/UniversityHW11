@@ -1,9 +1,12 @@
 package repository.implement;
 import moduls.Employee;
+import moduls.enumention.Status;
 import repository.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmpoloyeeRepositoryEmployee implements Repository<Employee> {
@@ -20,28 +23,61 @@ public class EmpoloyeeRepositoryEmployee implements Repository<Employee> {
         preparedStatement.setInt(1, employee.getId());
         preparedStatement.setString(2,employee.getName());
         preparedStatement.setInt(3,employee.getPasscode());
-        preparedStatement.setObject(4,employee.getStatus());
+        preparedStatement.setString(4,employee.getStatus().toString());
         preparedStatement.execute();
 
     }
 
     @Override
-    public List<Employee> AllElement() {
+    public List<Employee> AllElement() throws SQLException {
+        List<Employee> list = new ArrayList<>();
+
+        String sql = "select * from  employee ";
+        preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            int id = resultSet.getInt("ide");
+            String name = resultSet.getString("name");
+            int passcode = resultSet.getInt("passcode");
+            String sta = resultSet.getString("status");
+            Employee employee = new Employee(id,name,passcode, Status.ACTIVE);
+            list.add(employee);
+    }
+    return list;
+    }
+
+    @Override
+    public Employee show(int id) throws SQLException {
+        String sql = "select * from  employee " +
+                "where ide=?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            String name = resultSet.getString("name");
+            int passcode = resultSet.getInt("passcode");
+            String sta = resultSet.getString("status");
+            Employee employee = new Employee(id,name,passcode, Status.ACTIVE);
+            return employee;
+        }
+
         return null;
     }
 
     @Override
-    public void show(Employee employee) {
+    public void delete(int id) throws SQLException {
+        String sql = "delete from employee where ide = ?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        preparedStatement.executeUpdate();
 
     }
 
     @Override
-    public void delete(Employee employee) {
-
-    }
-
-    @Override
-    public void modify(Employee employee) {
+    public void modify(Employee employee) throws SQLException {
+        String sql = "UPDATE employee set passcode=? " +
+                "where ide=? and passcode=?";
+        preparedStatement = connection.prepareStatement(sql);
 
     }
 }

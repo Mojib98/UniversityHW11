@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface Repository<T extends BaseClass> {
     void add(T t) throws SQLException;
-    List<T> AllElement();
-    void show(T t);
-    void delete(T t);
-    void modify(T t);
+    List<T> AllElement() throws SQLException;
+    T show(int id) throws SQLException;
+    void delete(int id) throws SQLException;
+    void modify(T t) throws SQLException;
 
 }

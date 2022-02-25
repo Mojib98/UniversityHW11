@@ -8,9 +8,8 @@ import service.Service;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
-public class EmployeeService implements Service {
+public class EmployeeServiceEmployee implements Service {
     private int id;
     Scanner scanner = new Scanner(System.in);
     Random random = new Random();
@@ -39,15 +38,7 @@ public class EmployeeService implements Service {
     }
 
     public void addProfessor() {
-        System.out.println("please insert name");
-        String name = scanner.next();
-        int id = random.ints(4, 10, 99).findFirst().getAsInt();
-        System.out.println("please select status ft or ht ");
-        String sete = scanner.next();
-        if (sete.equals("ft"))
-            status = status.FULLTIME;
-        else status = status.HALFTIME;
-        professor = new Professor(id, name, id, status);
+
 
     }
 
