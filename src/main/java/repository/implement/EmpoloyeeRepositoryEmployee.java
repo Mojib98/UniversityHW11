@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmpoloyeeRepositoryEmployee implements Repository<Employee> {
-   private Connection connection = Singleton.getInstance().getConnection();
+   private Connection connection;
     PreparedStatement preparedStatement;
 
     public EmpoloyeeRepositoryEmployee() throws SQLException, ClassNotFoundException {
+        connection = Singleton.getInstance().getConnection();
+
+
     }
 
     @Override
@@ -25,6 +28,7 @@ public class EmpoloyeeRepositoryEmployee implements Repository<Employee> {
         preparedStatement.setInt(3,employee.getPasscode());
         preparedStatement.setString(4,employee.getStatus().toString());
         preparedStatement.execute();
+        preparedStatement.close();
 
     }
 

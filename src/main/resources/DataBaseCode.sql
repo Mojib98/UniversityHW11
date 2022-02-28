@@ -28,8 +28,8 @@ create table if not exists student(
     ids int primary key ,
     passcode int,
     name varchar(20),
-    totalscore int
-
+    totalscore int,
+    canselect boolean default 't'
 );
 
 
@@ -39,6 +39,7 @@ create table if not exists section(
     ids int references student(ids),
     idc int references course(idc),
     unit int,
+    score int,
     semester varchar(4)
 
 
