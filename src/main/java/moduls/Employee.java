@@ -23,4 +23,11 @@ public class Employee extends Person{
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "status=" + status +
+                ", payment=" + payment +
+                "} " + super.toString();
+    }
 }
