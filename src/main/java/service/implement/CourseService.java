@@ -20,6 +20,15 @@ public class CourseService {
         }
 
     }
+    public Course InfoCourse(int id){
+        try {
+            return courseRepository.show(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 
 
 

@@ -1,10 +1,7 @@
 import moduls.Employee;
 import moduls.enumention.Status;
 import repository.implement.EmpoloyeeRepositoryEmployee;
-import service.implement.EmployeeServiceCourse;
-import service.implement.EmployeeServiceEmployee;
-import service.implement.EmployeeServiceProfessor;
-import service.implement.EmployeeServiceStudent;
+import service.implement.*;
 
 import java.sql.SQLException;
 
@@ -22,8 +19,11 @@ public class MainTest {
        // e.AllElement();
       //  EmployeeServiceStudent s = new EmployeeServiceStudent();
   //      EmployeeServiceProfessor e = new EmployeeServiceProfessor();
-        EmployeeServiceCourse e = new EmployeeServiceCourse();
+        //  EmployeeServiceCourse e = new EmployeeServiceCourse();
         // e.add();
+        StudentService e = new StudentService();
+        e.seting(97,"mojib");
+        e.add();
         e.AllElement();
         System.out.println("*************");
         e.show();

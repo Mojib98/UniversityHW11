@@ -29,6 +29,9 @@ public class StudentRepository implements Repository<Course> {
 
     @Override
     public void add(Course course) throws SQLException {
+        if (isCourseHere(course)){
+            return;
+        }
         String sql  = "insert into section(id, namestudent, ids, idc, unit) values (default,?,?,?,?)";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1,name);
@@ -42,8 +45,8 @@ public class StudentRepository implements Repository<Course> {
     public List<Course> AllElement() throws SQLException {
         Course course;
         List<Course> list = new ArrayList<>();
-        String sql = "select idc,name,unit,nameprofessor,ids,namestudent,score from course " +
-                "full outer join section on course.idc = section.idc " +
+        String sql = "select section.idc,name,section.unit,nameprofessor,ids,namestudent,score from section " +
+                "full outer join course c on section.idc = c.idc  " +
                 "where section.ids=?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
@@ -53,8 +56,8 @@ public class StudentRepository implements Repository<Course> {
             String name = resultSet.getString(2);
             int unit  = resultSet.getInt(3);
             int ids  = resultSet.getInt(5);
-            String nameP = resultSet.getString(4);
-            int degree = resultSet.getInt(6);
+            String nameP = resultSet.getString(6);
+            int degree = resultSet.getInt(7);
             course = new Course(idc,name,unit,nameP,degree,id);
             list.add(course);
         }
@@ -80,6 +83,32 @@ public class StudentRepository implements Repository<Course> {
 
     @Override
     public void modify(Course course) throws SQLException {
+
+    }
+    private boolean isCourseHere(Course course) throws SQLException {
+        String sql="select count(*) from section where ids=? and idc=?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        preparedStatement.setInt(2,course.getId());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        if (resultSet.getInt(1)>0)
+            return true;
+        else
+            return false;
+    }
+    private int myUnit(){
+        String sql = "Select sum(unit) from section where ids=?";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
 
     }
 }
