@@ -33,4 +33,15 @@ public class Course extends BaseClass{
     public int getProfessorId() {
         return professorId;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "unit=" + unit +
+                ", professor='" + professor + '\'' +
+                ", professorId=" + professorId +
+                ", degree=" + degree +
+                ", studenNumber=" + studenNumber +
+                "} " + super.toString();
+    }
 }

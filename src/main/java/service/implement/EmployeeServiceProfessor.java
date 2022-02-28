@@ -35,6 +35,11 @@ public class EmployeeServiceProfessor implements Service {
             status = status.FULLTIME;
         else status = status.HALFTIME;
         professor = new Professor(id, name, id, status);
+        try {
+            employeeRepositoryProfessor.add(professor);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -60,7 +65,8 @@ public class EmployeeServiceProfessor implements Service {
         System.out.println("Please insert id");
         this.id = scanner.nextInt();
         try {
-            employeeRepositoryProfessor.show(id);
+           Professor professor= employeeRepositoryProfessor.show(id);
+            System.out.println(professor);
         }
         catch (SQLException e){
             e.printStackTrace();

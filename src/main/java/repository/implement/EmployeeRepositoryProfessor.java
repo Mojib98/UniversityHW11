@@ -28,6 +28,7 @@ public class EmployeeRepositoryProfessor implements Repository<Professor> {
         preparedStatement.setInt(3,professor.getPasscode());
         preparedStatement.setString(4,professor.getStatus().toString());
         preparedStatement.execute();
+        preparedStatement.close();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class EmployeeRepositoryProfessor implements Repository<Professor> {
     public Professor show(int id) throws SQLException {
         Status status;
         Professor professor;
-        String sql = "select * from employee " +
+        String sql = "select * from professor " +
                 "where  ide=?";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
@@ -62,9 +63,11 @@ public class EmployeeRepositoryProfessor implements Repository<Professor> {
             String sta = resultSet.getString("status");
 
             professor = new Professor(id,name,passcode,Status.valueOf(sta));
+            preparedStatement.close();
             return professor;
 
     }
+        preparedStatement.close();
         return null;
 
     }
@@ -75,6 +78,7 @@ public class EmployeeRepositoryProfessor implements Repository<Professor> {
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
         preparedStatement.executeUpdate();
+        preparedStatement.close();
 
     }
 

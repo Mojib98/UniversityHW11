@@ -27,7 +27,7 @@ public class EmployeeRepositoryCourse implements Repository<Course> {
         preparedStatement.setString(4,course.getProfessor());
         preparedStatement.setInt(5,course.getUnit());
         preparedStatement.execute();
-
+        preparedStatement.close();
     }
 
     @Override
@@ -35,7 +35,8 @@ public class EmployeeRepositoryCourse implements Repository<Course> {
         Course course;
         List<Course> list = new ArrayList<>();
         String sql = "select * from course";
-        ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+        preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             int id = resultSet.getInt("idc");
             String name = resultSet.getString("name");
@@ -46,22 +47,30 @@ public class EmployeeRepositoryCourse implements Repository<Course> {
             list.add(course);
 
         }
+        preparedStatement.close();
         return list;
     }
 
     @Override
     public Course show(int id) throws SQLException {
         String sql = "select * from course where idc=?";
-        preparedStatement.setInt(1,id);
         preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
         ResultSet resultSet =preparedStatement.executeQuery();
         resultSet.next();
-            String name = resultSet.getString("name");
+        int ids = resultSet.getInt("idc");
+        String name = resultSet.getString("name");
+        int unit = resultSet.getInt("unit");
+        int idP = resultSet.getInt("idprofessor");
+        String nameP = resultSet.getString("nameprofessor");
+       Course course = new Course(ids,name,unit,nameP,idP);
+        /*    String name = resultSet.getString("name");
             int unit = resultSet.getInt("unit");
             int idP = resultSet.getInt("idprofessor");
             String nameP = resultSet.getString("nameprofessor");
            Course course = new Course(id,name,unit,nameP,idP);
-        return course;
+           preparedStatement.close();*/
+           return course;
     }
 
     @Override
@@ -70,6 +79,7 @@ public class EmployeeRepositoryCourse implements Repository<Course> {
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
         preparedStatement.executeUpdate();
+        preparedStatement.close();
 
     }
 

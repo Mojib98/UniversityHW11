@@ -1,6 +1,7 @@
 package service.implement;
 
 import moduls.Course;
+import repository.implement.EmployeeRepositoryCourse;
 import service.Service;
 
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ public class EmployeeServiceCourse implements Service {
     private int id;
     Scanner scanner = new Scanner(System.in);
     EmployeeServiceProfessor p = new EmployeeServiceProfessor();
+    EmployeeRepositoryCourse e = new EmployeeRepositoryCourse();
     Random random = new Random();
     Course course;
 
@@ -30,12 +32,23 @@ public class EmployeeServiceCourse implements Service {
         System.out.println("Please insert unit");
         int unit  = scanner.nextInt();
         course = new Course(id,name,unit,profess,idProfessor);
+        try {
+            e.add(course);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void AllElement() {
-        List<Course> list = new ArrayList<>();
+        List<Course> list = null;
+        try {
+            list=e.AllElement();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         for (Course v:list
              ) {
             System.out.println(v);
@@ -44,12 +57,25 @@ public class EmployeeServiceCourse implements Service {
 
     @Override
     public void show() {
-
+        System.out.println("insert id ");
+        int idC= scanner.nextInt();
+        try {
+            course = e.show(idC);
+            System.out.println(course);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void delete() {
-
+        System.out.println("insert id");
+        int id = scanner.nextInt();
+        try {
+            e.delete(id);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
