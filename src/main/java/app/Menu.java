@@ -14,6 +14,7 @@ public class Menu {
     EmployeeServiceProfessor eSPService;
     EmployeeServiceCourse eSCService ;
     StudentService studentService ;
+    ProfessorService professorService;
 
     public Menu() throws SQLException, ClassNotFoundException {
         employee = new EmployeeServiceEmployee();
@@ -21,6 +22,7 @@ public class Menu {
         eSPService =new EmployeeServiceProfessor();
         eSCService  = new EmployeeServiceCourse();
         studentService = new StudentService();
+        professorService = new ProfessorService();
 
     }
 
@@ -35,8 +37,9 @@ public class Menu {
             }
         }
         if (id> 1000 & id <1999){
+            System.out.println("ggg");
             if (logInService.logInProfessor(id,passCode)){
-
+                professor();
             }
         }
         if (id> 2000 & id <3000){
@@ -138,7 +141,26 @@ public class Menu {
             }
         }
     }
-
+    private void professor(){
+        professorService.setId(id);
+        boolean isProfessorHere = true;
+        while (isProfessorHere){
+            System.out.println("for insert degree select 1\n" +
+                    "for shoe info select 2");
+            int secletio= scanner.nextInt();
+            switch (secletio){
+                case 1:
+                    professorService.add();
+                    break;
+                case 2:
+                    professorService.show();
+                case 3:
+                    professorService.AllElement();
+                case 4:
+                    isProfessorHere=false;
+            }
+        }
+    }
 
 
 

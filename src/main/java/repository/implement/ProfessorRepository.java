@@ -11,7 +11,9 @@ public class ProfessorRepository {
     private PreparedStatement preparedStatement;
     private int id;
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public ProfessorRepository() throws SQLException, ClassNotFoundException {
     }
@@ -34,14 +36,14 @@ public class ProfessorRepository {
         Course course;
         List<Course> list = new ArrayList<>();
         String sql = "Select  *  from section full outer join course c on c.idc = section.idc\n" +
-                "                                      full outer join professor p on p.ide = c.idprofessor where p.ide =65;";
+                "                                      full outer join professor p on p.ide = c.idprofessor where p.ide =?;";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
-            int id = resultSet.getInt("section.id");
+            int id = resultSet.getInt(1);
             String name = resultSet.getString("namestudent");
-            int unit = resultSet.getInt("c.unit");
+            int unit = resultSet.getInt(5);
             int idP = resultSet.getInt("idprofessor");
             String nameP = resultSet.getString("nameprofessor");
             course = new Course(id,name,unit,nameP,idP);
@@ -60,7 +62,14 @@ public class ProfessorRepository {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
-
+    public String myStatus() throws SQLException {
+        String sql="select status from  professor where ide=?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getString(1);
+    }
 
     }
 
