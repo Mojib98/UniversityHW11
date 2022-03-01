@@ -32,7 +32,7 @@ public class EmployeeServiceStudent implements Service {
         try {
             String name = scanner.next();
 
-            int id = random.ints(4, 10, 99).findFirst().getAsInt();
+            int id = random.ints(4, 2000, 3000).findFirst().getAsInt();
             student = new Student(id, name, id);
             repositoryStudent.add(student);
 

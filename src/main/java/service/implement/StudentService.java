@@ -19,7 +19,8 @@ public class StudentService implements Service {
 
     @Override
     public void add() {
-        System.out.println("");
+        courseService.listCourse();
+        System.out.println("please insert your code");
         int idC=scanner.nextInt();
         course = courseService.selectCourseWithStuden(idC);
         try {
@@ -67,8 +68,8 @@ public class StudentService implements Service {
     public void modify() {
 
     }
-    public void seting(int id,String name){
+    public void seting(int id){
         studentRepository.setId(id);
-        studentRepository.setName(name);
     }
+    private void myaverage(){}
 }

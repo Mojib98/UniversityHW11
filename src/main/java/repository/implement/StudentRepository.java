@@ -20,9 +20,6 @@ public class StudentRepository implements Repository<Course> {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public StudentRepository() throws SQLException, ClassNotFoundException {
     }
@@ -74,8 +71,8 @@ public class StudentRepository implements Repository<Course> {
     public void delete(int id) throws SQLException {
         String sql = "delete  from  section where ids=? and idc=?";
         preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1,id);
-        preparedStatement.setInt(2,this.id);
+        preparedStatement.setInt(1,this.id);
+        preparedStatement.setInt(2,id);
         preparedStatement.executeUpdate();
         preparedStatement.close();
 
@@ -110,5 +107,16 @@ public class StudentRepository implements Repository<Course> {
         }
         return 0;
 
+    }
+    public void myaverage() throws SQLException {
+        String sql = "select sum(score) from section " +
+                "full outer join course c on section.idc = c.idc  " +
+                "where section.ids=?";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        int score = resultSet.getInt(1);
+        int unti = myUnit();
+        int average = score/unti;
     }
 }

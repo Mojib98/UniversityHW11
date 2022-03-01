@@ -38,7 +38,7 @@ public class EmployeeServiceEmployee implements Service {
         try {
             System.out.println("please insert name");
             String name = scanner.next();
-            int ids = 55 + random.ints(4, 100, 200).findFirst().getAsInt();
+            int ids =  random.ints(4, 100, 999).findFirst().getAsInt();
             employee = new Employee(ids, name, ids, status.ACTIVE);
             empoloyeeRepositoryEmployee.add(employee);
         } catch (Exception e) {

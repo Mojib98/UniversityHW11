@@ -1,5 +1,4 @@
 package moduls;
-
 public class Student extends Person{
     private int unit;
 

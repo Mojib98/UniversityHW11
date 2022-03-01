@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseRepository implements Repository<Course> {
@@ -23,7 +24,21 @@ public class CourseRepository implements Repository<Course> {
 
     @Override
     public List<Course> AllElement() throws SQLException {
-        return null;
+        Course course = null;
+        List<Course> list = new ArrayList<>();
+        String sql = "select * from course";
+        preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+       while (resultSet.next()) {
+           int id = resultSet.getInt(2);
+           String name = resultSet.getString(3);
+           int unit = resultSet.getInt(4);
+           int idP = resultSet.getInt(5);
+           String nameP = resultSet.getString(6);
+           course = new Course(id, name, unit, nameP, idP);
+           list.add(course);
+       }
+       return list;
     }
 
     @Override
@@ -33,13 +48,13 @@ public class CourseRepository implements Repository<Course> {
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setInt(1,id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
+        resultSet.next();
             String name = resultSet.getString(3);
             int unit  = resultSet.getInt(4);
             int idP  = resultSet.getInt(5);
             String nameP = resultSet.getString(6);
             course = new Course(id,name,unit,nameP,idP);
-        }
+
         return course;
     }
 

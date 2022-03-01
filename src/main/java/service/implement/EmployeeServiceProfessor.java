@@ -28,7 +28,7 @@ public class EmployeeServiceProfessor implements Service {
     public void add() {
         System.out.println("please insert name");
         String name = scanner.next();
-        int id = random.ints(4, 10, 99).findFirst().getAsInt();
+        int id = random.ints(4, 1000, 1999).findFirst().getAsInt();
         System.out.println("please select status ft or ht ");
         String sete = scanner.next();
         if (sete.equals("ft"))
